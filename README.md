@@ -1,7 +1,5 @@
 # Pradigi's Sage
 
-## Pradigi's Sage
-
 **How to run**
 
 `python -m venv .venv `
