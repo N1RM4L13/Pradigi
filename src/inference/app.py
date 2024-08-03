@@ -1,43 +1,37 @@
 import streamlit as st
-from openai import OpenAI
+from llm import llm_call
+from retriever import retrieve
+import openai
 
-st.title("Pradigi Bot")
-
-# Set OpenAI API key from Streamlit secrets
-client = OpenAI(
-    api_key="fc98e46e525fbaf45ca0c94de7a71cf6a2036649d06f04f9212a3485eb5d7c7a",
-    base_url="https://api.together.xyz/v1",
+client = openai.OpenAI(
+  api_key="fc98e46e525fbaf45ca0c94de7a71cf6a2036649d06f04f9212a3485eb5d7c7a",
+  base_url="https://api.together.xyz/v1",
 )
 
-# Set a default model
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
+st.title("Pradigi's Sage")
 
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Accept user input
-if prompt := st.chat_input("What is up?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-with st.chat_message("assistant"):
-    stream = client.chat.completions.create(
-        model=st.session_state["openai_model"],
-        messages=[
-            {"role": m["role"], "content": m["content"]}
-            for m in st.session_state.messages
-        ],
-        stream=True,
+with st.form("my_form"):
+    text = st.text_area(
+        "Enter text:",
+        "Hello, How are you?",
     )
-    response = st.write_stream(stream)
-st.session_state.messages.append({"role": "assistant", "content": response})
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        documents="\n".join(retrieve(text))
+        stream=response = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant. Answer to query only according to the context provided in an informative and descriptive way."},
+                {"role": "user", "content": f"Context:\n{documents}\n\nQuery:{text}"},
+            ],
+            temperature=0.7,max_tokens=2000,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0,
+            stop=["<|eot_id|>"],
+            stream=True
+            )
+        response=st.write_stream(stream)
+
+

@@ -12,4 +12,5 @@ def retrieve(query: str,k_value: int = 3):
         top_k=k_value,
         include_metadata=True,
     )
-    return response
+    return [re.sub('\s+',' ',i['metadata']['text']) for i in response['matches']]
+

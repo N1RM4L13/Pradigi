@@ -5,17 +5,18 @@ client = openai.OpenAI(
   base_url="https://api.together.xyz/v1",
 )
 
-response = client.chat.completions.create(
-  model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
-  messages=[
-    {"role": "system", "content": "You are a travel agent. Be descriptive and helpful."},
-    {"role": "user", "content": "Tell me about San Francisco"},
-  ],
-  temperature=0.5,max_tokens=2000,
-  top_p=1,
-  frequency_penalty=0,
-  presence_penalty=0,
-  stop=["<|eot_id|>"]
-)
+def llm_call(query,context):
+    response = client.chat.completions.create(
+    model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant. Answer to query only according to the context provided in an informative and descrbed."},
+        {"role": "user", "content": f"Context:\n{context}\n\nQuery:{query}"},
+    ],
+    temperature=0.7,max_tokens=2000,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0,
+    stop=["<|eot_id|>"]
+    )
 
-print(response.choices[0].message.content)
+    return response.choices[0].message.content
