@@ -31,4 +31,4 @@ Start the Service
 - Vector Database [https://www.pinecone.io/]
 - Embedding Model(M2-BERT-80M-2K-Retrieval) [https://docs.together.ai/docs/embedding-models]
 - LLM(Llama 3.1 8B) [https://ai.meta.com/blog/meta-llama-3-1/]
-- Inference Provided [https://together.ai/pricing]
+- Inference Service [https://together.ai/pricing]
