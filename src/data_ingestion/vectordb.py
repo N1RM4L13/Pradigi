@@ -5,7 +5,7 @@ import re
 import time
 
 
-pc = Pinecone(api_key="32da42f1-943a-44fa-a759-627e27d4373c")
+pc = Pinecone(api_key="")
 index = pc.Index("pradigi")
 
 
