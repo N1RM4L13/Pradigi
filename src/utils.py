@@ -11,7 +11,7 @@ def create_embeds(text:str):
     headers = {
         "accept": "application/json",
         "content-type": "application/json",
-        "Authorization": "Bearer fc98e46e525fbaf45ca0c94de7a71cf6a2036649d06f04f9212a3485eb5d7c7a"
+        "Authorization": "Bearer Key"
         }
     response = requests.post(url, json=payload, headers=headers)
     return response.json()["data"][0]["embedding"]
