@@ -4,7 +4,7 @@ from retriever import retrieve
 import openai
 
 client = openai.OpenAI(
-  api_key="fc98e46e525fbaf45ca0c94de7a71cf6a2036649d06f04f9212a3485eb5d7c7a",
+  api_key="Key",
   base_url="https://api.together.xyz/v1",
 )
 
