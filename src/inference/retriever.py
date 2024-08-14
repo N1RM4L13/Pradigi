@@ -2,7 +2,7 @@ from pinecone import Pinecone
 from src.utils import create_embeds
 import re
 
-pc = Pinecone(api_key="32da42f1-943a-44fa-a759-627e27d4373c")
+pc = Pinecone(api_key="Key")
 index = pc.Index("pradigi")
 
 def retrieve(query: str,k_value: int = 3):
